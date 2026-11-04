@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+Archive/
+*.zip
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+predictions/*
+!predictions/.gitkeep
