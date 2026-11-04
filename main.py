@@ -16,7 +16,12 @@ def main():
     parser.add_argument('--limit',type=int,default=None)
     parser.add_argument('--threshold',type=float,default=0.03)
     parser.add_argument('--predictions',type=Path)
+    parser.add_argument('--post-nms-iou',type=float,default=None,
+                        help='Optional duplicate suppression for saved predictions (evaluate only)')
     args=parser.parse_args()
+    if args.post_nms_iou is not None:
+        if args.command!='evaluate': parser.error('--post-nms-iou is supported for evaluate only')
+        if not 0 <= args.post_nms_iou <= 1: parser.error('NMS IoU must be between 0 and 1')
     if args.limit is not None and args.limit < 1: parser.error('--limit must be positive')
     if not 0 <= args.threshold <= 1: parser.error('--threshold must be between 0 and 1')
     if args.command=='check':
@@ -47,14 +52,19 @@ def main():
     paths=[p for p in image_paths(args.split) if p.name in names]
     if {p.name for p in paths} != names: raise ValueError('Saved images not found in dataset')
     from evaluate import evaluate, count_details
+    predictions=payload['predictions']
+    if args.post_nms_iou is not None:
+        from postprocess import suppress_duplicates
+        predictions=suppress_duplicates(predictions,args.post_nms_iou)
     row={'model':payload['model'],'split':args.split,'images':len(paths),'threshold':args.threshold,
-         **evaluate(payload['predictions'],load_ground_truth(args.split,paths),threshold=args.threshold)}
+         'post_nms_iou':args.post_nms_iou,
+         **evaluate(predictions,load_ground_truth(args.split,paths),threshold=args.threshold)}
     output=ROOT/'results'/f'metrics_{payload["model"]}_{args.split}_{stamp}.csv'
     with output.open('w',newline='',encoding='utf-8-sig') as f:
         writer=csv.DictWriter(f,fieldnames=list(row)); writer.writeheader(); writer.writerow(row)
     details=output.with_name(output.stem+'_per_image.csv')
     with details.open('w',newline='',encoding='utf-8-sig') as f:
-        rows=count_details(payload['predictions'],load_ground_truth(args.split,paths),args.threshold)
+        rows=count_details(predictions,load_ground_truth(args.split,paths),args.threshold)
         writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
     print(json.dumps(row,indent=2)); print(output)
 

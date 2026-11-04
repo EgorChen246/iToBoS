@@ -1,0 +1,138 @@
+{
+  "split": "val",
+  "images": 80,
+  "gt_boxes": 236,
+  "selection": "Maximum F1; no NMS preferred on exact ties",
+  "test_used": false,
+  "best": [
+    {
+      "model": "yolo26s",
+      "nms_iou": null,
+      "threshold": 0.11,
+      "Precision": 0.625,
+      "Recall": 0.5296610169491526,
+      "F1": 0.573394495412844,
+      "F2": 0.5463286713286714,
+      "TP": 125,
+      "FP": 75,
+      "FN": 111,
+      "MeanIoU_TP": 0.7991803028832767,
+      "IoU_TP_sum_per_GT": 0.42329465195088806,
+      "CountMAE": 1.775,
+      "CountExactAccuracy": 0.3625,
+      "CountExactImages": 29,
+      "EvaluatedImages": 80,
+      "CountBias": -0.45
+    },
+    {
+      "model": "fasterrcnn",
+      "nms_iou": 0.3,
+      "threshold": 0.74,
+      "Precision": 0.5483870967741935,
+      "Recall": 0.6483050847457628,
+      "F1": 0.5941747572815534,
+      "F2": 0.6255110384300899,
+      "TP": 153,
+      "FP": 126,
+      "FN": 83,
+      "MeanIoU_TP": 0.7658265945077632,
+      "IoU_TP_sum_per_GT": 0.4964892752529143,
+      "CountMAE": 1.7375,
+      "CountExactAccuracy": 0.3625,
+      "CountExactImages": 29,
+      "EvaluatedImages": 80,
+      "CountBias": 0.5375
+    },
+    {
+      "model": "deformable_detr",
+      "nms_iou": 0.3,
+      "threshold": 0.43,
+      "Precision": 0.6586826347305389,
+      "Recall": 0.4661016949152542,
+      "F1": 0.5459057071960298,
+      "F2": 0.495049504950495,
+      "TP": 110,
+      "FP": 57,
+      "FN": 126,
+      "MeanIoU_TP": 0.7665567167195038,
+      "IoU_TP_sum_per_GT": 0.3572933849116331,
+      "CountMAE": 1.5875,
+      "CountExactAccuracy": 0.4,
+      "CountExactImages": 32,
+      "EvaluatedImages": 80,
+      "CountBias": -0.8625
+    }
+  ],
+  "diagnostics": {
+    "yolo26s": {
+      "baseline": {
+        "Precision": 0.625,
+        "Recall": 0.5296610169491526,
+        "F1": 0.573394495412844,
+        "F2": 0.5463286713286714,
+        "TP": 125,
+        "FP": 75,
+        "FN": 111,
+        "MeanIoU_TP": 0.7991803028832767,
+        "IoU_TP_sum_per_GT": 0.42329465195088806,
+        "CountMAE": 1.775,
+        "CountExactAccuracy": 0.3625,
+        "CountExactImages": 29,
+        "EvaluatedImages": 80,
+        "CountBias": -0.45
+      },
+      "error_types": {
+        "duplicate_fp": 0,
+        "localization_fp_iou_0.1_to_0.5": 6,
+        "background_fp_iou_below_0.1": 69
+      }
+    },
+    "fasterrcnn": {
+      "baseline": {
+        "Precision": 0.5464285714285714,
+        "Recall": 0.6483050847457628,
+        "F1": 0.5930232558139534,
+        "F2": 0.6250000000000001,
+        "TP": 153,
+        "FP": 127,
+        "FN": 83,
+        "MeanIoU_TP": 0.7658265945077632,
+        "IoU_TP_sum_per_GT": 0.49648927525291425,
+        "CountMAE": 1.75,
+        "CountExactAccuracy": 0.3625,
+        "CountExactImages": 29,
+        "EvaluatedImages": 80,
+        "CountBias": 0.55
+      },
+      "error_types": {
+        "duplicate_fp": 0,
+        "localization_fp_iou_0.1_to_0.5": 9,
+        "background_fp_iou_below_0.1": 118
+      }
+    },
+    "deformable_detr": {
+      "baseline": {
+        "Precision": 0.6470588235294118,
+        "Recall": 0.4661016949152542,
+        "F1": 0.541871921182266,
+        "F2": 0.4937163375224416,
+        "TP": 110,
+        "FP": 60,
+        "FN": 126,
+        "MeanIoU_TP": 0.7665567167195038,
+        "IoU_TP_sum_per_GT": 0.3572933849116331,
+        "CountMAE": 1.625,
+        "CountExactAccuracy": 0.3875,
+        "CountExactImages": 31,
+        "EvaluatedImages": 80,
+        "CountBias": -0.825
+      },
+      "error_types": {
+        "duplicate_fp": 2,
+        "localization_fp_iou_0.1_to_0.5": 6,
+        "background_fp_iou_below_0.1": 52
+      }
+    }
+  },
+  "warning": "Candidate validation results only. Baseline test metrics and timings remain unchanged. False positives are defined against current annotations, not independently reviewed."
+}
